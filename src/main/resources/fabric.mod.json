@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "storageexpansion",
+  "version": "${version}",
+  "name": "StorageExpansion",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "MPL-2.0",
+  "icon": "assets/storageex/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      {
+        "adapter": "kotlin",
+        "value": "dev.toliner.storageexpansion.client.StorageExpansionClient"
+      }
+    ],
+    "main": [
+      {
+        "adapter": "kotlin",
+        "value": "dev.toliner.storageexpansion.StorageExpansion"
+      }
+    ]
+  },
+  "mixins": [
+    "storageex.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.13",
+    "fabric": "*",
+    "minecraft": "1.19.3",
+    "fabric-language-kotlin": ">=1.9.0+kotlin.1.8.0",
+    "libblockattributes_core": ">=0.11.0",
+    "libblockattributes_items": ">=0.11.0"
+  }
+}
