@@ -1,5 +1,6 @@
 package dev.toliner.storageexpansion
 
+import dev.toliner.storageexpansion.block.ChestBlock
 import net.devtech.arrp.json.blockstate.JBlockModel
 import net.devtech.arrp.json.blockstate.JState
 import net.devtech.arrp.json.blockstate.JVariant
@@ -16,6 +17,26 @@ object SEBlocks {
     val blockItems: Map<Block, Item>
         get() = _blockItems
     private val _blockItems: MutableMap<Block, Item> = mutableMapOf()
+
+    val copperChest by lazy {
+        addBlock(ChestBlock(ChestTier.COPPER), "copper_chest", "Copper Chest", "銅のチェスト")
+    }
+
+    val ironChest by lazy {
+        addBlock(ChestBlock(ChestTier.IRON), "iron_chest", "Iron Chest", "鉄のチェスト")
+    }
+
+    val goldChest by lazy {
+        addBlock(ChestBlock(ChestTier.GOLD), "gold_chest", "Gold Chest", "金のチェスト")
+    }
+
+    val diamondChest by lazy {
+        addBlock(ChestBlock(ChestTier.DIAMOND), "diamond_chest" , "Diamond Chest", "ダイヤモンドのチェスト")
+    }
+
+    val netheriteChest by lazy {
+        addBlock(ChestBlock(ChestTier.NETHERITE), "netherite_chest", "Netherite Chest", "ネザライトのチェスト")
+    }
 
     private fun addSimpleBlock(
         name: String,
