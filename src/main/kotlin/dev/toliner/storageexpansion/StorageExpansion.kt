@@ -37,6 +37,13 @@ object StorageExpansion : ModInitializer {
     }
 
     override fun onInitialize() {
+        Registry.register(Registries.BLOCK_ENTITY_TYPE, id("chest"), chestEntityType)
+
+        ItemStorage.SIDED.registerForBlockEntity({ storage, _ -> storage.storage }, chestEntityType)
+
+        SEScreenHandlers.registerAll()
+        SERecipes.addRecipes()
+
         ItemGroupEvents.modifyEntriesEvent(itemGroup).register { group ->
             SEBlocks.blockItems.values.forEach { group.add(it) }
         }
