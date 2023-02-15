@@ -26,7 +26,7 @@ class CopperChestGuiDescription(
         root.insets = Insets.ROOT_PANEL
 
         val slot = WItemSlot.of(blockInventory, 0, 9, 4)
-        root.add(slot, 0, 0)
+        root.add(slot, 0, 1)
         root.add(this.createPlayerInventoryPanel(), 0, 5)
 
         root.validate(this)

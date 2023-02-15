@@ -26,7 +26,7 @@ class IronChestGuiDescription(
         root.insets = Insets.ROOT_PANEL
 
         val slot = WItemSlot.of(blockInventory, 0, 9, 6)
-        root.add(slot, 0, 0)
+        root.add(slot, 0, 1)
         root.add(this.createPlayerInventoryPanel(), 0, 7)
 
         root.validate(this)
