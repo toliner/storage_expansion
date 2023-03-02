@@ -19,23 +19,58 @@ object SEBlocks {
     private val _blockItems: MutableMap<Block, Item> = mutableMapOf()
 
     val copperChest by lazy {
-        addBlock(ChestBlock(ChestTier.COPPER), "copper_chest", "Copper Chest", "銅のチェスト")
+        addBlock(
+            block = ChestBlock(ChestTier.COPPER),
+            name = "copper_chest",
+            localizationEn = "Copper Chest",
+            localizationJp = "銅のチェスト",
+            useDefaultState = false,
+            useDefaultModel = false,
+        )
     }
 
     val ironChest by lazy {
-        addBlock(ChestBlock(ChestTier.IRON), "iron_chest", "Iron Chest", "鉄のチェスト")
+        addBlock(
+            block = ChestBlock(ChestTier.IRON),
+            name = "iron_chest",
+            localizationEn = "Iron Chest",
+            localizationJp = "鉄のチェスト",
+            useDefaultState = false,
+            useDefaultModel = false,
+        )
     }
 
     val goldChest by lazy {
-        addBlock(ChestBlock(ChestTier.GOLD), "gold_chest", "Gold Chest", "金のチェスト")
+        addBlock(
+            block = ChestBlock(ChestTier.GOLD),
+            name = "gold_chest",
+            localizationEn = "Gold Chest",
+            localizationJp = "金のチェスト",
+            useDefaultState = false,
+            useDefaultModel = false,
+        )
     }
 
     val diamondChest by lazy {
-        addBlock(ChestBlock(ChestTier.DIAMOND), "diamond_chest" , "Diamond Chest", "ダイヤモンドのチェスト")
+        addBlock(
+            block = ChestBlock(ChestTier.DIAMOND),
+            name = "diamond_chest",
+            localizationEn = "Diamond Chest",
+            localizationJp = "ダイヤモンドのチェスト",
+            useDefaultState = false,
+            useDefaultModel = false,
+        )
     }
 
     val netheriteChest by lazy {
-        addBlock(ChestBlock(ChestTier.NETHERITE), "netherite_chest", "Netherite Chest", "ネザライトのチェスト")
+        addBlock(
+            block = ChestBlock(ChestTier.NETHERITE),
+            name = "netherite_chest",
+            localizationEn = "Netherite Chest",
+            localizationJp = "ネザライトのチェスト",
+            useDefaultState = false,
+            useDefaultModel = false,
+        )
     }
 
     private fun addSimpleBlock(

@@ -1,0 +1,8 @@
+{
+  "parent": "storageexpansion:block/chest_base",
+  "textures": {
+    "end": "storageexpansion:block/diamond_chest_end",
+    "side": "storageexpansion:block/diamond_chest_side",
+    "front": "storageexpansion:block/diamond_chest_front"
+  }
+}

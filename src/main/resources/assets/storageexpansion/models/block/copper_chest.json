@@ -1,0 +1,8 @@
+{
+  "parent": "storageexpansion:block/chest_base",
+  "textures": {
+    "end": "storageexpansion:block/copper_chest_end",
+    "side": "storageexpansion:block/copper_chest_side",
+    "front": "storageexpansion:block/copper_chest_front"
+  }
+}
