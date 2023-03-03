@@ -1,6 +1,5 @@
 package dev.toliner.storageexpansion
 
-import com.google.gson.JsonElement
 import dev.toliner.storageexpansion.tile.ChestEntity
 import net.devtech.arrp.api.RRPCallback
 import net.devtech.arrp.api.RuntimeResourcePack
@@ -15,7 +14,6 @@ import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
-import net.minecraft.util.Identifier
 
 object StorageExpansion : ModInitializer {
 
@@ -27,7 +25,6 @@ object StorageExpansion : ModInitializer {
     internal val localeJa_Jp = JLang.lang().apply {
         itemGroup(id("general"), "Storage Expansion")
     }
-    internal val recipes = mutableMapOf<Identifier, JsonElement>()
 
     val chestEntityType: BlockEntityType<ChestEntity> by lazy {
         FabricBlockEntityTypeBuilder.create(
@@ -45,11 +42,13 @@ object StorageExpansion : ModInitializer {
         SERecipes.addRecipes()
 
         ItemGroupEvents.modifyEntriesEvent(itemGroup).register { group ->
-            SEBlocks.blockItems.values.forEach { group.add(it) }
+            SEItems.addAllItemToCreativeTab(group)
         }
 
         resourcePack.addLang(id("en_us"), localeEn_Us)
         resourcePack.addLang(id("ja_jp"), localeJa_Jp)
+
+        resourcePack.dump()
         RRPCallback.BEFORE_VANILLA.register { it.add(resourcePack) }
     }
 }
