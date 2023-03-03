@@ -95,14 +95,15 @@ object SERecipes {
                 recipeIngredient(SEItems.storageCore),
                 recipeIngredient(SEBlocks.diamondChest),
                 recipeIngredient(Items.NETHERITE_INGOT),
-                recipeIngredient(Items.GLOWSTONE)
+                recipeIngredient(Items.GLOWSTONE),
+                recipeIngredient(Items.EMERALD)
             ),
             ItemStack(SEBlocks.netheriteChest)
-        ) { (core, chest, ingot, gs) ->
+        ) { (core, chest, ingot, gs, emerald) ->
             set(
                 ingot, core, ingot,
-                gs, chest, gs,
-                ingot, gs, ingot
+                emerald, chest, emerald,
+                gs, gs, gs
             )
         }
     }

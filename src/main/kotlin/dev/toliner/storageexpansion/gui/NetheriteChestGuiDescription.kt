@@ -34,9 +34,9 @@ class NetheriteChestGuiDescription(
         setRootPanel(rootPanel)
         val cardPanel = WCardPanel()
         for (i in 0 until maxPage) {
-            cardPanel.add(i, WItemSlot.of(blockInventory, 108 * i, 18, 6))
+            cardPanel.add(i, WItemSlot.of(blockInventory, 108 * i, 18, 9))
         }
-        rootPanel.add(cardPanel, 0, 1, 18, 6)
+        rootPanel.add(cardPanel, 0, 1, 18, 9)
 
         val text = WText(Text.literal("${index + 1} / $maxPage"))
         rootPanel.add(text, 8, 0, 2, 1)
@@ -57,10 +57,10 @@ class NetheriteChestGuiDescription(
                 text.text = Text.literal("${index + 1} / $maxPage")
             }
         }
-        rootPanel.add(buttonRight, 14, 8, 2, 1)
-        rootPanel.add(buttonLeft, 1, 8, 2, 1)
+        rootPanel.add(buttonRight, 14, 11, 2, 1)
+        rootPanel.add(buttonLeft, 1, 11, 2, 1)
 
-        rootPanel.add(createPlayerInventoryPanel(), 4, 7)
+        rootPanel.add(createPlayerInventoryPanel(), 4, 10)
 
         rootPanel.validate(this)
     }
