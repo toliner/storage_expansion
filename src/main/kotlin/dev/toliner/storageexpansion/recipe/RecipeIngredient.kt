@@ -4,7 +4,7 @@ import net.minecraft.registry.Registries
 import net.minecraft.util.Identifier
 import net.minecraft.item.Item as McItem
 
-internal sealed interface RecipeIngredient<T> {
+sealed interface RecipeIngredient<T> {
     val type: String
     val content: T
     val id: Identifier

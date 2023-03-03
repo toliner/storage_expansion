@@ -1,51 +1,46 @@
 package dev.toliner.storageexpansion.recipe
 
-import com.google.gson.JsonArray
-import com.google.gson.JsonObject
-import dev.toliner.storageexpansion.StorageExpansion
 import dev.toliner.storageexpansion.id
+import net.devtech.arrp.api.RuntimeResourcePack
+import net.devtech.arrp.json.recipe.*
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
-import net.minecraft.registry.Registries
 import net.minecraft.util.Identifier
 
-internal object RecipeGenerator {
-    fun addShapedRecipe(id: Identifier, ingredients: List<RecipeIngredient<*>>, output: ItemStack, configure: ShapedRecipeBuilder.(List<RecipeIngredient<*>>) -> Unit) {
+class RecipeGenerator(private val resourcePack: RuntimeResourcePack) {
+
+    fun addShapedRecipe(
+        id: Identifier,
+        ingredients: List<RecipeIngredient<*>>,
+        output: ItemStack,
+        configure: ShapedRecipeBuilder.(List<RecipeIngredient<*>>) -> Unit,
+    ) {
         val (pattern, patternMap) = ShapedRecipeBuilder(ingredients).apply { configure(ingredients) }.build()
-        @Suppress("UNCHECKED_CAST")
-        val patternList = patternMap.toList().filter { it.second != null } as  List<Pair<Char, RecipeIngredient<*>>>
-        val json = createShapedRecipeJson(
-            patternList.map { it.first },
-            patternList.map { it.second },
-            pattern.map { list -> list.joinToString(separator = "") { it?.toString() ?: " " } },
-            output
+        val recipe = JRecipe.shaped(
+            JPattern.pattern(*(pattern.map { it.joinToString(separator = "") }
+                .toTypedArray())),
+            JKeys.keys().apply {
+                patternMap.mapValues { (_, ingredient) ->
+                    ingredient.toJIngredient()
+                }.forEach { (k, ingredient) ->
+                    key(k.toString(), ingredient)
+                }
+            },
+            JResult.itemStack(output.item, output.count),
         )
-        StorageExpansion.recipes += id to json
+        resourcePack.addRecipe(id, recipe)
     }
 
-    private fun createShapedRecipeJson(keys: List<Char>, items: List<RecipeIngredient<*>>, pattern: List<String>, out: ItemStack): JsonObject =
-        jsonObject {
-            addProperty("type", "minecraft:crafting_shaped")
-            addProperty("group", "voidtech")
-            add("pattern", jsonArray {
-                for (i in 0..2) {
-                    add(pattern[i])
-                }
-            })
-            add("key", keys.indices.map {
-                keys[it] to jsonObject { addProperty(items[it].type, items[it].id.toString()) }
-            }.fold(JsonObject()) { r, t ->
-                r.apply { add(t.first.toString(), t.second)}
-            })
-            add("result", jsonObject {
-                addProperty("item", Registries.ITEM.getId(out.item).toString())
-                addProperty("count", out.count)
-            })
-        }
-
-    fun addShapelessRecipe(id: Identifier, ingredients: List<RecipeIngredient<*>>, output: ItemStack) {
-        val json = createShapelessRecipeJson(ingredients, output)
-        StorageExpansion.recipes += id to json
+    fun addShapelessRecipe(
+        id: Identifier,
+        ingredients: List<RecipeIngredient<*>>,
+        output: ItemStack,
+    ) {
+        val recipe = JRecipe.shapeless(
+            JIngredients.ingredients().apply { ingredients.forEach { add(it.toJIngredient()) } },
+            JResult.itemStack(output.item, output.count)
+        )
+        resourcePack.addRecipe(id, recipe)
     }
 
     fun addShapelessCompressRecipe(id: Identifier, count: Int, input: RecipeIngredient<*>, output: ItemStack) {
@@ -66,23 +61,9 @@ internal object RecipeGenerator {
         addShapelessDecompressRecipe(id("${id.path}_down"), RecipeIngredient.Item(large), ItemStack(small, count))
     }
 
-    private fun createShapelessRecipeJson(items: List<RecipeIngredient<*>>, out: ItemStack): JsonObject =
-        jsonObject {
-            addProperty("type", "minecraft:crafting_shapeless")
-            addProperty("group", "voidtech")
-            add("ingredients", jsonArray {
-                for (item in items) {
-                    add(JsonObject().apply {
-                        addProperty(item.type, item.id.toString())
-                    })
-                }
-            })
-            add("result", jsonObject {
-                addProperty("item", Registries.ITEM.getId(out.item).toString())
-                addProperty("count", out.count)
-            })
+    private fun RecipeIngredient<*>.toJIngredient(): JIngredient? =
+        when (this) {
+            is RecipeIngredient.Item -> JIngredient.ingredient().item(content)
+            is RecipeIngredient.Tag -> JIngredient.ingredient().tag(content)
         }
-
-    private inline fun jsonObject(configure: JsonObject.() -> Unit): JsonObject = JsonObject().apply(configure)
-    private inline fun jsonArray(configure: JsonArray.() -> Unit): JsonArray = JsonArray().apply(configure)
 }
